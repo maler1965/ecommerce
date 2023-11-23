@@ -14,6 +14,8 @@ const userRoutes = require('./routes/user.route');
 const authRoutes = require('./routes/auth.route');
 const postRoutes = require('./routes/post.route');
 const commentRoutes = require('./routes/comment.route');
+const commentRoutes2 = require('./routes/comment.route2');
+const commentRoutes1 = require('./routes/comment.route1');
 
 const app = express();
 const limiter = rateLimit({
@@ -38,13 +40,15 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+
 app.use('/api/v1', limiter);
 //routes
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/posts', postRoutes);
 app.use('/api/v1/comments', commentRoutes);
-
+app.use('/api/v1/comments2', commentRoutes2);
+app.use('/api/v1/comments1', commentRoutes1);
 app.all('*', (req, res, next) => {
   return next(
     new AppError(`Can't find ${req.originalUrl} on this server!`, 404)

@@ -68,6 +68,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   //6. Adjuntar el usuario en session
   req.sessionUser = user;
+  console.log({ user})
   next();
 });
 

@@ -21,6 +21,10 @@ router.route('/')
   postController.createPost
 );
 
+router
+  .route('/one/:id')
+  .get(postMiddleware.validPostPerFindOne, postController.findOnePost);
+
 router.use(authMiddleware.protect);
 
 router.get('/me', postController.findMyPosts);
