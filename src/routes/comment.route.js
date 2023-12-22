@@ -8,6 +8,8 @@ const authMiddleware = require('./../middlewares/auth.middleware');
 const commentMiddleware = require('./../middlewares/comment.middleware');
 const validationMiddleware = require('./../middlewares/validations.middleware');
 
+
+
 const router = express.Router();
 
 router.use(authMiddleware.protect);
@@ -20,6 +22,14 @@ router.post(
   commentController.createComment
 );
 
+router //no se esta usando esto
+  .post('/one/:id',
+   validationMiddleware.createCommentValidation,
+  commentController.createComment )
+  .delete('/all/:id',
+  commentMiddleware.validCommentTotal,
+  commentController.deleteCommentTotal  );
+
 router
   .use('/:id', commentMiddleware.validComment)
   .route('/:id')
@@ -28,6 +38,6 @@ router
     validationMiddleware.updateCommentValidation,
     commentController.updateComment
   )
-  .delete(commentController.deleteComment);
+  .delete(commentController.deleteComment); //deleteCommentTotal
 
 module.exports = router;

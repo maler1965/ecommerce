@@ -52,6 +52,11 @@ exports.validPostPerFindOne = catchAsync(async (req, res, next) => {
       },
       {
         model: Comment,
+/**/
+        where: {
+          status: true, // Filtra los comentarios con status true
+        },
+        
         include: [
           {
             model: User,

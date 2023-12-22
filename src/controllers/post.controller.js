@@ -132,6 +132,9 @@ exports.createPost = catchAsync(async (req, res, next) => {
 
   const post = await Post.create({ title, content, userId }); //
 
+
+
+  
   const postImgsPromises = req.files.map(async (file) => {
 
     const imgRef = ref(
@@ -146,6 +149,8 @@ exports.createPost = catchAsync(async (req, res, next) => {
       postImgUrl: imgUploaded.metadata.fullPath,
     });
   });
+
+
 
   await Promise.all(postImgsPromises);
 

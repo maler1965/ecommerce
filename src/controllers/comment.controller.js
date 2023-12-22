@@ -21,12 +21,16 @@ exports.findAllComment = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createComment = catchAsync(async (req, res, next) => {
-  const { text } = req.body;
-  const { id: userId } = req.sessionUser;
-  const { id: postId } = req.params;
 
-  const comment = await Comment.create({ text, postId, userId });
+exports.createComment = catchAsync(async (req, res, next) => {
+  const { textId } = req.body;
+  const { id: userId } = req.sessionUser;
+  //const { id: postId } = req.params;
+  const { name: name } = req.sessionUser;
+  const { textId: text } = textId;
+  const { postId: postId } = textId;
+
+  const comment = await Comment.create({ text, postId, userId, name });
 
   return res.status(201).json({
     status: 'success',
@@ -58,11 +62,35 @@ exports.updateComment = catchAsync(async (req, res, next) => {
 
 exports.deleteComment = catchAsync(async (req, res, next) => {
   const { comment } = req;
-
+ console.log({comment })
   await comment.update({ status: false });
 
   return res.status(200).json({
     status: 'success',
-    message: 'Comment deleted successfully',
+    message: 'Comment deleted successfully pedro',
   });
 });
+
+
+/*
+Si comment es un array con 30 elementos y deseas realizar la actualización en todos ellos, debes iterar sobre cada elemento del array y aplicar la actualización en cada uno. Puedes hacer esto utilizando un bucle for o métodos de array como forEach. Aquí hay un ejemplo utilizando forEach:
+*/
+
+exports.deleteCommentTotal = catchAsync(async (req, res, next) => {
+  const { comment } = req;
+ console.log({comment })
+
+ // Itera sobre cada comentario y actualiza el estado a false
+ await Promise.all(comment.map(async (singleComment) => {
+  await singleComment.update({ status: false });
+}));
+
+
+ // await comment.update({ status: false });
+
+  return res.status(200).json({
+    status: 'success',
+    message: 'Comment deleted successfully  ',
+  });
+});
+

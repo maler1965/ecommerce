@@ -16,7 +16,7 @@ router.route('/').get(commentController.findAllComment2);
 
 router.post(
   '/:id',
-  validationMiddleware.createCommentValidation,
+  validationMiddleware.createCommentValidation2,
   commentController.createComment2
 );
 

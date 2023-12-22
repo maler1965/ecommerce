@@ -74,7 +74,17 @@ exports.createPostValidation = [
 ];
 
 exports.createCommentValidation = [
-  body('text').notEmpty().withMessage('Text is required'),
+  body('textId').notEmpty().withMessage('TextId is required'),
+  validFields,
+];
+
+exports.createCommentValidation1 = [
+  body('textId1').notEmpty().withMessage('TextId1 is required'),
+  validFields,
+];
+
+exports.createCommentValidation2 = [
+  body('textId2').notEmpty().withMessage('TextId2 is required'),
   validFields,
 ];
 

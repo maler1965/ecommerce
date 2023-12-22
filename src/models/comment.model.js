@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../database/config');
 
-const Comment = db.define('comments', {
+const Comment = db.define('commen', {
   id: {
     primaryKey: true,
     allowNull: false,
@@ -9,6 +9,10 @@ const Comment = db.define('comments', {
     type: DataTypes.INTEGER,
   },
   text: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },

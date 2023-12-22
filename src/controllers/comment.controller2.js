@@ -22,10 +22,12 @@ exports.findAllComment2 = catchAsync(async (req, res, next) => {
 });
 
 exports.createComment2 = catchAsync(async (req, res, next) => {
-  const { text } = req.body;
+  const { textId2 } = req.body;
   const { id: userId } = req.sessionUser;
   const { name: name } = req.sessionUser;
-  const { id: postId } = req.params;
+ // const { id: postId } = req.params;
+ const { textId2: text } = textId2;
+ const { postId: postId } = textId2;
 
   const comment2 = await Comment2.create({ text, postId, userId, name });
 
