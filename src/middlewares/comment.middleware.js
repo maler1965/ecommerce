@@ -5,12 +5,16 @@ const AppError = require('../utils/appError');
 exports.validComment = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
+ console.log({ id  })
+
   const comment = await Comment.findOne({
     where: {
       status: true,
-      userId: id ,//id,
+      userId: id ,
     },
   });
+
+  console.log({comment  })
 
   if (!comment) {
     return next(new AppError('Comment not found', 404));

@@ -32,10 +32,21 @@ exports.createComment = catchAsync(async (req, res, next) => {
 
   const comment = await Comment.create({ text, postId, userId, name });
 
+  // Recuperar todos los comentarios del usuario
+  const userComments = await Comment.findAll({
+    where: { 
+      userId,
+      status: true,
+     },
+
+    // Puedes agregar otras opciones de consulta según tus necesidades
+  });
+
   return res.status(201).json({
     status: 'success',
     message: 'Comment created successfully',
     comment,
+    userComments,
   });
 });
 
@@ -62,12 +73,36 @@ exports.updateComment = catchAsync(async (req, res, next) => {
 
 exports.deleteComment = catchAsync(async (req, res, next) => {
   const { comment } = req;
- console.log({comment })
+  const { id: userId } = req.sessionUser;
+
+ console.log({userId })
+ console.log({ comment })
+
   await comment.update({ status: false });
+
+   // Itera sobre cada comentario y actualiza el estado a false
+/*
+ await Promise.all(comment.map(async (oneComment) => {
+  await oneComment.update({ status: false });
+}));
+*/
+
+    // Recuperar todos los comentarios del usuario
+  const nouComments = await Comment.findAll({
+      where: { 
+        userId,
+        status: true,
+       },
+  
+      // Puedes agregar otras opciones de consulta según tus necesidades
+    });
+  
+    console.log({ nouComments })
 
   return res.status(200).json({
     status: 'success',
     message: 'Comment deleted successfully pedro',
+    nouComments,
   });
 });
 
@@ -78,6 +113,7 @@ Si comment es un array con 30 elementos y deseas realizar la actualización en t
 
 exports.deleteCommentTotal = catchAsync(async (req, res, next) => {
   const { comment } = req;
+  const { id: userId } = req.sessionUser;
  console.log({comment })
 
  // Itera sobre cada comentario y actualiza el estado a false
@@ -86,11 +122,25 @@ exports.deleteCommentTotal = catchAsync(async (req, res, next) => {
 }));
 
 
+
  // await comment.update({ status: false });
+
+  // Recuperar todos los comentarios del usuario
+  const nouCommentsAll = await Comment.findAll({
+    where: { 
+      userId,
+      status: true,
+     },
+
+    // Puedes agregar otras opciones de consulta según tus necesidades
+  });
+
+  console.log({ nouCommentsAll })
 
   return res.status(200).json({
     status: 'success',
     message: 'Comment deleted successfully  ',
+    nouCommentsAll,
   });
 });
 
