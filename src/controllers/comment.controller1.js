@@ -26,18 +26,34 @@ exports.createComment1 = catchAsync(async (req, res, next) => {
   const { textId1 } = req.body;
   const { id: userId } = req.sessionUser;
   const { name: name } = req.sessionUser;
- // const { id: postId } = req.params;
+ //const { id: postId } = req.params;
  const { textId1: text } = textId1;
  const { postId: postId } = textId1;
 
   const comment1 = await Comment1.create({ text, postId, userId, name });
 
+
+  // Recuperar todos los comentarios del usuario
+  const userComments1 = await Comment1.findAll({
+    where: { 
+      postId,
+      status: true,
+     },
+
+    // Puedes agregar otras opciones de consulta según tus necesidades
+  });
+
+
   return res.status(201).json({
     status: 'success',
     message: 'Comment1 created successfully',
     comment1,
+    userComments1,
   });
 });
+
+
+
 
 exports.findOneComment1 = catchAsync(async (req, res, next) => {
   const { comment1 } = req;

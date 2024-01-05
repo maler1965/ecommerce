@@ -68,7 +68,7 @@ exports.validPostPerFindOne = catchAsync(async (req, res, next) => {
   });
   //3. valido que el post exista
   if (!post) {
-    return next(new AppError(`Post with id: ${id} not found`, 404));
+    return next(new AppError(`Post with id: ${id} not found. (No hay comentarios de este usuario)`, 404));
   }
   //4. adjunto el post por la req. y doy continuidad
   req.user = post.user;
